@@ -4,7 +4,7 @@
 
 const CONFIG = {
   VOICE_COUNT: 40, // Number of simultaneous playbacks
-  PITCH_MIN: 0.2, // Minimum playback rate
+  PITCH_MIN: 0.1, // Minimum playback rate
   PITCH_MAX: 1.5, // Maximum playback rate
   STAGGER_MAX_MS: 800, // Maximum random delay before each voice starts
   GAIN_MIN: 0.3, // Minimum volume per voice
@@ -38,6 +38,10 @@ const statusDisplay = document.getElementById("statusDisplay");
 // Config panel toggle
 const configHeader = document.getElementById("configHeader");
 const configGrid = document.getElementById("configGrid");
+
+// Stats block panel toggle
+const statsHeader = document.getElementById("statsHeader");
+const statsGrid = document.getElementById("statsGrid");
 
 // Config controls
 const voiceCountInput = document.getElementById("voiceCount");
@@ -276,6 +280,12 @@ configHeader.addEventListener("click", () => {
   configGrid.classList.toggle("open");
 });
 
+// Stats block panel toggle
+statsHeader.addEventListener("click", () => {
+  statsHeader.classList.toggle("open");
+  statsGrid.classList.toggle("open");
+});
+
 // Configuration control event listeners
 voiceCountInput.addEventListener("input", (e) => {
   const value = parseInt(e.target.value);
@@ -337,5 +347,5 @@ document.addEventListener(
       initAudioContext();
     }
   },
-  { once: true }
+  { once: true },
 );

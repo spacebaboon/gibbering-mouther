@@ -1,100 +1,270 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gibbering Mouther Voice Generator</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Gibbering Mouther</h1>
-        <p class="subtitle">Dungeon Master's tool for madness-inducing voices</p>
+      <h1>Greater Gibbering Mouther</h1>
+      <p class="subtitle">Dungeon Master's tool for madness-inducing voices</p>
+      <p class="subtitle">
+        Homebrew version of the Monster Manual original. The creature
+        telepathically knows the characters' names, and names one victim from
+        its hundred mouths, driving the others into a killing frenzy!
+      </p>
 
-        <div class="status-display initialized" id="statusDisplay">
-            Ready to record
+      <div class="status-display initialized" id="statusDisplay">
+        Ready to record
+      </div>
+
+      <div class="button-group">
+        <button id="recordButton" class="btn btn-primary">Record Name</button>
+        <button id="playButton" class="btn btn-secondary" disabled>
+          Gibber away!
+        </button>
+        <button id="stopButton" class="btn btn-stop" style="display: none">
+          Stop gibbering
+        </button>
+      </div>
+
+      <div class="config-panel">
+        <h3 class="toggle-header" id="configHeader">
+          <span>Configuration</span>
+          <span class="toggle-icon">▶</span>
+        </h3>
+        <div class="config-grid" id="configGrid">
+          <div class="config-item">
+            <label for="voiceCount">Voice Count:</label>
+            <input type="number" id="voiceCount" min="1" max="100" value="40" />
+            <span class="config-value" id="voiceCountValue">40</span>
+          </div>
+
+          <div class="config-item">
+            <label for="pitchMin">Pitch Min:</label>
+            <input
+              type="range"
+              id="pitchMin"
+              min="0.1"
+              max="1.5"
+              step="0.1"
+              value="0.1"
+            />
+            <span class="config-value" id="pitchMinValue">0.1</span>
+          </div>
+
+          <div class="config-item">
+            <label for="pitchMax">Pitch Max:</label>
+            <input
+              type="range"
+              id="pitchMax"
+              min="0.5"
+              max="3.0"
+              step="0.1"
+              value="1.5"
+            />
+            <span class="config-value" id="pitchMaxValue">1.5</span>
+          </div>
+
+          <div class="config-item">
+            <label for="staggerMax">Stagger Max (ms):</label>
+            <input
+              type="range"
+              id="staggerMax"
+              min="0"
+              max="2000"
+              step="50"
+              value="800"
+            />
+            <span class="config-value" id="staggerMaxValue">800</span>
+          </div>
+
+          <div class="config-item">
+            <label for="gainMin">Volume Min:</label>
+            <input
+              type="range"
+              id="gainMin"
+              min="0.1"
+              max="0.9"
+              step="0.1"
+              value="0.3"
+            />
+            <span class="config-value" id="gainMinValue">0.3</span>
+          </div>
+
+          <div class="config-item">
+            <label for="gainMax">Volume Max:</label>
+            <input
+              type="range"
+              id="gainMax"
+              min="0.5"
+              max="1.0"
+              step="0.1"
+              value="1.0"
+            />
+            <span class="config-value" id="gainMaxValue">1.0</span>
+          </div>
+
+          <div class="config-item">
+            <label for="reverbMix">Reverb Mix:</label>
+            <input
+              type="range"
+              id="reverbMix"
+              min="0"
+              max="1"
+              step="0.1"
+              value="0.5"
+            />
+            <span class="config-value" id="reverbMixValue">0.5</span>
+          </div>
+
+          <div class="config-item">
+            <label for="loopProbability">Loop Probability:</label>
+            <input
+              type="range"
+              id="loopProbability"
+              min="0"
+              max="1"
+              step="0.1"
+              value="0.3"
+            />
+            <span class="config-value" id="loopProbabilityValue">0.3</span>
+          </div>
         </div>
+      </div>
 
-        <div class="button-group">
-            <button id="recordButton" class="btn btn-primary">
-                Record Name
-            </button>
-            <button id="playButton" class="btn btn-secondary" disabled>
-                Play Gibbering Effect
-            </button>
-            <button id="stopButton" class="btn btn-stop" style="display: none;">
-                Stop
-            </button>
-        </div>
-
-        <div class="config-panel">
-            <h3 class="config-header" id="configHeader">
-                <span>Configuration</span>
-                <span class="toggle-icon">▶</span>
-            </h3>
-            <div class="config-grid" id="configGrid">
-                <div class="config-item">
-                    <label for="voiceCount">Voice Count:</label>
-                    <input type="number" id="voiceCount" min="1" max="100" value="40">
-                    <span class="config-value" id="voiceCountValue">40</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="pitchMin">Pitch Min:</label>
-                    <input type="range" id="pitchMin" min="0.1" max="1.5" step="0.1" value="0.2">
-                    <span class="config-value" id="pitchMinValue">0.2</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="pitchMax">Pitch Max:</label>
-                    <input type="range" id="pitchMax" min="0.5" max="3.0" step="0.1" value="1.5">
-                    <span class="config-value" id="pitchMaxValue">1.5</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="staggerMax">Stagger Max (ms):</label>
-                    <input type="range" id="staggerMax" min="0" max="2000" step="50" value="800">
-                    <span class="config-value" id="staggerMaxValue">800</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="gainMin">Volume Min:</label>
-                    <input type="range" id="gainMin" min="0.1" max="0.9" step="0.1" value="0.3">
-                    <span class="config-value" id="gainMinValue">0.3</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="gainMax">Volume Max:</label>
-                    <input type="range" id="gainMax" min="0.5" max="1.0" step="0.1" value="1.0">
-                    <span class="config-value" id="gainMaxValue">1.0</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="reverbMix">Reverb Mix:</label>
-                    <input type="range" id="reverbMix" min="0" max="1" step="0.1" value="0.5">
-                    <span class="config-value" id="reverbMixValue">0.5</span>
-                </div>
-
-                <div class="config-item">
-                    <label for="loopProbability">Loop Probability:</label>
-                    <input type="range" id="loopProbability" min="0" max="1" step="0.1" value="0.3">
-                    <span class="config-value" id="loopProbabilityValue">0.3</span>
-                </div>
+      <div class="config-panel">
+        <h3 class="toggle-header" id="statsHeader">
+          <span>Stats</span>
+          <span class="toggle-icon">▶</span>
+        </h3>
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-block">
+            <div class="stat-block-heading">
+              <h2>Greater Gibbering Mouther</h2>
+              <p class="stat-block-type">Large Aberration, Chaotic Evil</p>
             </div>
+            <div class="stat-block-divider"></div>
+            <div class="stat-block-basics">
+              <p><strong>Armor Class</strong> 18 (Psychic Distortion)</p>
+              <p><strong>Hit Points</strong> 100 (12d10 + 36)</p>
+              <p><strong>Speed</strong> 10 ft.</p>
+            </div>
+            <div class="stat-block-divider"></div>
+            <div class="stat-block-abilities">
+              <div class="ability">
+                <span class="ability-name">STR</span>
+                <span class="ability-score">10 (+0)</span>
+              </div>
+              <div class="ability">
+                <span class="ability-name">DEX</span>
+                <span class="ability-score">16 (+3)</span>
+              </div>
+              <div class="ability">
+                <span class="ability-name">CON</span>
+                <span class="ability-score">16 (+3)</span>
+              </div>
+              <div class="ability">
+                <span class="ability-name">INT</span>
+                <span class="ability-score">18 (+4)</span>
+              </div>
+              <div class="ability">
+                <span class="ability-name">WIS</span>
+                <span class="ability-score">16 (+3)</span>
+              </div>
+              <div class="ability">
+                <span class="ability-name">CHA</span>
+                <span class="ability-score">18 (+4)</span>
+              </div>
+            </div>
+            <div class="stat-block-divider"></div>
+            <div class="stat-block-details">
+              <p><strong>Saving Throws</strong> Int +9, Wis +8, Cha +9</p>
+              <p>
+                <strong>Skills</strong> Deception +9, Perception +8, Insight +8
+              </p>
+              <p>
+                <strong>Condition Immunities</strong> Charmed, Frightened, Prone
+              </p>
+              <p>
+                <strong>Senses</strong> Darkvision 60 ft., Passive Perception 18
+              </p>
+              <p>
+                <strong>Languages</strong> Telepathy 120 ft. (All languages
+                known by creatures within range)
+              </p>
+              <p>
+                <strong>Challenge</strong> 12 (8,400 XP) &mdash; CR is elevated
+                due to the potency of its Mind-Control.
+              </p>
+            </div>
+            <div class="stat-block-divider"></div>
+            <div class="stat-block-traits">
+              <h3>Traits</h3>
+              <p>
+                <strong class="trait-name">Reactive Mirror.</strong> Any
+                creature that hits the Gibbering Mouther with a melee attack
+                must succeed on a DC 18 Intelligence saving throw or take
+                psychic damage equal to half the damage dealt to the creature.
+              </p>
+              <p>
+                <strong class="trait-name">Amorphous.</strong> The Gibbering
+                Mouther can move through a space as narrow as 1 inch wide
+                without squeezing.
+              </p>
+              <p>
+                <strong class="trait-name">Unnatural Blur.</strong> The
+                Gibbering Mouther shifts in and out of the party's perception.
+                Attack rolls against it have disadvantage unless the attacker is
+                immune to the Charmed condition.
+              </p>
+            </div>
+            <div class="stat-block-divider"></div>
+            <div class="stat-block-actions">
+              <h3>Actions</h3>
+              <p>
+                <strong class="trait-name">Chorus of Condemnation.</strong> The
+                hundreds of mouths on the Gibbering Mouther begin chanting the
+                name of one character it can see within 60 feet (the
+                <em>Pariah</em>). Every other character within 60 feet that can
+                hear the chant must make a DC 16 Intelligence saving throw.
+              </p>
+              <p class="action-detail">
+                <strong>On a Failure:</strong> The character is compelled by a
+                psychic "logic virus". It must use its turn to move toward the
+                Pariah and take the Multiattack or Cast a Spell action to deal
+                maximum damage to the Pariah. The character can attempt the
+                saving throw again at the end of its next turn.
+              </p>
+              <p class="action-detail">
+                <strong>On a Success:</strong> The character is unaffected but
+                takes 2d10 psychic damage from the mental strain.
+              </p>
+              <p class="action-detail">
+                The effect lasts until the Gibbering Mouther is silenced or
+                killed.
+              </p>
+              <p>
+                <strong class="trait-name"
+                  >Psychic Sob (Recharge 5&ndash;6).</strong
+                >
+                The creature lets out a collective, multi-voiced wail of pure
+                grief. Each character within 30 feet must make a DC 18 Wisdom
+                saving throw, taking 35 (10d6) psychic damage on a failed save,
+                or half as much on a successful one. If a character fails this
+                save while currently affected by the Chorus of Condemnation,
+                they also fall Prone as they are overwhelmed by the Pariah's
+                "sins."
+              </p>
+            </div>
+          </div>
         </div>
-
-        <div class="instructions">
-            <h3>Instructions:</h3>
-            <ol>
-                <li>Click "Record Name" and speak a character's name</li>
-                <li>Click "Stop Recording" when done</li>
-                <li>Click "Play Gibbering Effect" to hear the madness</li>
-                <li>Click "Stop" to end the effect</li>
-            </ol>
-        </div>
+      </div>
     </div>
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

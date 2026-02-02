@@ -17,7 +17,7 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
@@ -37,7 +37,7 @@ h1 {
 
 .subtitle {
   text-align: center;
-  color: #666;
+  color: #444;
   font-style: italic;
   margin-bottom: 2rem;
 }
@@ -113,15 +113,16 @@ h1 {
 .config-panel {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background: #fdf1dc;
+  border: 2px solid #e0c9a1;
+  border-radius: 0;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
 }
 
-.config-header {
+.toggle-header {
   margin-top: 0;
   margin-bottom: 0;
-  color: #555;
+  color: #7a200d;
   cursor: pointer;
   user-select: none;
   display: flex;
@@ -131,18 +132,21 @@ h1 {
   margin: -0.5rem;
   border-radius: 4px;
   transition: background-color 0.2s ease;
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
 }
 
-.config-header:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+.toggle-header:hover {
+  background-color: rgba(122, 32, 13, 0.08);
 }
 
 .toggle-icon {
   font-size: 0.8em;
   transition: transform 0.3s ease;
+  color: #7a200d;
 }
 
-.config-header.open .toggle-icon {
+.toggle-header.open .toggle-icon {
   transform: rotate(90deg);
 }
 
@@ -154,7 +158,10 @@ h1 {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease, opacity 0.5s ease, margin-top 0.5s ease;
+  transition:
+    max-height 0.5s ease,
+    opacity 0.5s ease,
+    margin-top 0.5s ease;
 }
 
 .config-grid.open {
@@ -171,8 +178,9 @@ h1 {
 }
 
 .config-item label {
-  color: #666;
+  color: #1b1b1b;
   font-size: 0.9em;
+  font-weight: bold;
 }
 
 .config-item input[type="range"],
@@ -183,7 +191,7 @@ h1 {
 
 .config-item input[type="range"] {
   height: 6px;
-  background: #ddd;
+  background: #e0c9a1;
   border-radius: 3px;
   outline: none;
 }
@@ -193,7 +201,7 @@ h1 {
   appearance: none;
   width: 16px;
   height: 16px;
-  background: #888;
+  background: #7a200d;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -201,26 +209,141 @@ h1 {
 .config-item input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
-  background: #888;
+  background: #7a200d;
   border-radius: 50%;
   cursor: pointer;
   border: none;
 }
 
 .config-item input[type="number"] {
-  background: #fff;
-  border: 1px solid #ddd;
-  color: #333;
+  background: #faf0d7;
+  border: 1px solid #e0c9a1;
+  color: #1b1b1b;
   padding: 5px;
   border-radius: 4px;
   font-family: inherit;
 }
 
 .config-value {
-  color: #666;
+  color: #7a200d;
   font-family: monospace;
   font-weight: bold;
   text-align: right;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.5s ease,
+    opacity 0.5s ease,
+    margin-top 0.5s ease;
+}
+
+.stats-grid.open {
+  max-height: 3000px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* D&D Stat Block */
+.stat-block {
+  background: #fdf1dc;
+  border: 2px solid #e0c9a1;
+  padding: 1.2rem;
+  font-family: "Georgia", serif;
+  font-size: 0.9em;
+  color: #1b1b1b;
+  line-height: 1.5;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.stat-block-heading h2 {
+  font-size: 1.6em;
+  color: #7a200d;
+  margin: 0 0 0.1em 0;
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+
+.stat-block-type {
+  font-style: italic;
+  color: #555;
+  font-size: 0.95em;
+  margin: 0;
+}
+
+.stat-block-divider {
+  height: 3px;
+  margin: 0.6rem 0;
+  background: linear-gradient(to right, #7a200d, #e0c9a1, #7a200d);
+  border: none;
+}
+
+.stat-block-basics p,
+.stat-block-details p {
+  margin: 0.2em 0;
+}
+
+.stat-block-basics strong,
+.stat-block-details strong {
+  color: #7a200d;
+}
+
+.stat-block-abilities {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 0.3rem 0;
+}
+
+.ability {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+}
+
+.ability-name {
+  font-weight: bold;
+  color: #7a200d;
+  font-size: 0.85em;
+}
+
+.ability-score {
+  font-size: 0.9em;
+}
+
+.stat-block-traits h3,
+.stat-block-actions h3 {
+  color: #7a200d;
+  font-size: 1.15em;
+  border-bottom: 1px solid #7a200d;
+  padding-bottom: 0.2em;
+  margin: 0 0 0.5em 0;
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+
+.stat-block-traits p,
+.stat-block-actions p {
+  margin: 0.5em 0;
+}
+
+.trait-name {
+  font-style: italic;
+  color: #1b1b1b;
+}
+
+.action-detail {
+  margin-left: 1.2em;
+  font-size: 0.95em;
 }
 
 .instructions {
