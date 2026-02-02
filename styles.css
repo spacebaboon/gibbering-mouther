@@ -219,9 +219,10 @@ h1 {
   background: #faf0d7;
   border: 1px solid #e0c9a1;
   color: #1b1b1b;
-  padding: 5px;
+  padding: 8px;
   border-radius: 4px;
   font-family: inherit;
+  font-size: 16px;
 }
 
 .config-value {
